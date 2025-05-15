@@ -14,7 +14,7 @@ features = ['acousticness', 'danceability', 'energy', 'instrumentalness',
 
 # Load model and scaler using pickle
 with open('model.pkl', 'rb') as f:
-    scaler = pickle.load(f)
+    model = pickle.load(f)
 with open('scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
 with open('pca.pkl', 'rb') as f:
