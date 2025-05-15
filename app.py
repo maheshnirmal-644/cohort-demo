@@ -15,6 +15,10 @@ features = ['acousticness', 'danceability', 'energy', 'instrumentalness',
 # Load model and scaler using pickle
 with open('model.pkl', 'rb') as f:
     scaler = pickle.load(f)
+with open('scaler.pkl', 'rb') as f:
+    scaler = pickle.load(f)
+with open('pca.pkl', 'rb') as f:
+    pca = pickle.load(f)
 
 #with open('kmeans_model.pkl', 'rb') as f:
     #model = pickle.load(f)
@@ -29,7 +33,8 @@ def predict_cluster():
         data = request.json
         input_data = np.array([[data[feature] for feature in features]])
         input_scaled = scaler.transform(input_data)
-        cluster = model.predict(input_scaled)[0]
+        input_pca = pca.transform(input_scaled)
+        cluster = model.predict(input_pca)[0]
         return jsonify({'cluster': int(cluster)})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
